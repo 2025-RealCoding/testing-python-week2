@@ -74,13 +74,13 @@ def test_delete_registered_user(setup_user_db):
     assert user_info is None
 
 
-def test_authenticate_deleted_user(setup_user_db):
-    # Given: DB에서 기존 사용자를 삭제
-    user_id = "aaron_peirsol"
-    delete_user(user_id)
+def test_get_unregistered_user(setup_user_db):
+    # 등록되지 않은 회원은 조회할 수 없다.
+    # Given: 등록되지 않은 사용자 ID
+    user_id = "non_existent_user"
 
-    # When: 삭제된 사용자로 조회 서비스 호출
+    # When: 사용자 정보 조회 서비스를 호출
     user_info = get_user(user_id)
 
-    # Then: 조회 실패(None 반환) 해야 함
+    # Then: 사용자 정보 조회 서비스가 None을 반환해야 함
     assert user_info is None
