@@ -1,9 +1,15 @@
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.models.user import UserResponse
-from app.services.user_service import authenticate_user, register_user, get_user, delete_user
+from app.services.user_service import (
+    authenticate_user,
+    delete_user,
+    get_user,
+    register_user,
+)
 
 router = APIRouter()
+
 
 @router.post("/users/register", response_model=UserResponse)
 async def register(user_id: str = Form(...), image: UploadFile = File(...)):
@@ -16,6 +22,7 @@ async def register(user_id: str = Form(...), image: UploadFile = File(...)):
         registered_at=registered_user["registered_at"],
     )
 
+
 @router.post("/users/authenticate")
 async def authenticate(image: UploadFile = File(...)):
     """회원 인증 엔드포인트"""
@@ -26,8 +33,6 @@ async def authenticate(image: UploadFile = File(...)):
         raise HTTPException(status_code=401, detail="인증 실패: 사용자 없음")
 
     return {"user_id": user_id}
-
-
 
 @router.get("/users/{user_id}")
 def get_user_info(user_id: str):
