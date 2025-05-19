@@ -56,3 +56,10 @@ def test_delete_registered_user(setup_user_db):
 
     user_info = get_user(user_id)
     assert user_info is None
+
+
+def test_get_unregistered_user(setup_user_db):
+    user_id = "hanjinju"
+    user_info = get_user(user_id)
+
+    assert user_info is None
