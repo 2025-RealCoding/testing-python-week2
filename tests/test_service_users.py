@@ -73,11 +73,9 @@ def test_delete_registered_user(setup_user_db):
     user_info = get_user(user_id)
     assert user_info is None
 
-def test_authenticate_deleted_user(setup_user_db):
-    user_id = "aaron_peirsol"
+def test_nonauthenticate_user(setup_user_db):
+    user_id = "itsme"
     
-    result = delete_user(user_id)
-
     user_info = get_user(user_id)
 
     assert user_info is None
