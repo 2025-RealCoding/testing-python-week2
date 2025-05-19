@@ -49,3 +49,18 @@ def test_get_registered_user_api(client, setup_user_db):
     data = response.json()
     assert data["user_id"] == user_id
     assert "registered_at" in data
+
+
+def test_delete_registered_user_api(client, setup_user_db):
+    # Given: 등록된 사용자 ID
+    user_id = "aaron_peirsol"
+
+    # When: 회원 삭제 API 호출
+    response = client.delete(f"/users/{user_id}")
+
+    # Then: 삭제 성공 확인
+    assert response.status_code == 200
+
+    # 추가 확인: 삭제된 사용자 조회 시 404 확인
+    response = client.get(f"/users/{user_id}")
+    assert response.status_code == 404

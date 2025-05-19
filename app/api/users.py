@@ -1,7 +1,12 @@
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.models.user import UserResponse
-from app.services.user_service import authenticate_user, get_user, register_user
+from app.services.user_service import (
+    authenticate_user,
+    delete_user,
+    get_user,
+    register_user,
+)
 
 router = APIRouter()
 
@@ -44,4 +49,9 @@ def get_user_info(user_id: str):
 @router.delete("/users/{user_id}")
 def delete_user_info(user_id: str):
     """회원 삭제 엔드포인트"""
-    pass
+    result = delete_user(user_id)
+
+    if not result:
+        raise HTTPException(status_code=404, detail="사용자가 존재하지 않습니다.")
+
+    return {"message": "사용자가 성공적으로 삭제되었습니다."}

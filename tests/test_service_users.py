@@ -1,4 +1,9 @@
-from app.services.user_service import authenticate_user, get_user, register_user
+from app.services.user_service import (
+    authenticate_user,
+    delete_user,
+    get_user,
+    register_user,
+)
 
 
 def test_register_user():
@@ -52,3 +57,18 @@ def test_get_registered_user(setup_user_db):
     # Then: 등록 시각 등 사용자 정보를 정확히 반환해야 함
     assert user_info["user_id"] == user_id
     assert "registered_at" in user_info
+
+
+def test_delete_registered_user(setup_user_db):
+    # Given: 이미 등록된 사용자 ID
+    user_id = "aaron_peirsol"
+
+    # When: 사용자 삭제 서비스를 호출하면
+    result = delete_user(user_id)
+
+    # Then: 삭제가 성공적으로 이루어졌음을 반환
+    assert result is True
+
+    # 추가 확인: 사용자가 실제로 삭제되었는지 조회하여 확인
+    user_info = get_user(user_id)
+    assert user_info is None

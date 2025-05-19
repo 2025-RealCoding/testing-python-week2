@@ -3,7 +3,7 @@ from datetime import datetime
 import cv2
 import numpy as np
 
-from app.face.face_db import load_db, save_user
+from app.face.face_db import load_db, save_db, save_user
 from app.face.face_embedding import extract_embedding, verify_embedding
 
 
@@ -44,4 +44,9 @@ def get_user(user_id):
 
 def delete_user(user_id):
     """user_id로 회원 삭제"""
-    pass
+    db = load_db()
+    if user_id in db:
+        del db[user_id]
+        save_db(db)
+        return True
+    return False
