@@ -62,13 +62,12 @@ def test_delete_registered_user(setup_user_db):
     user_id = get_user(user_id)
     assert user_id is None
 
-def test_authenticate_deleted_user(setup_user_db):
-    # Given: 사용자가 주어짐
-    user_id = 'aaron_peirsol'
-    delete_user(user_id) # 그 사용자를 지움
+def test_non_authenticate_user(setup_user_db):
+    # Given: 등록되지 않은 회원
+    user_id = 'non_existent_user'
 
     # When
-    user = get_user(user_id) # 지운 사용자를 조회함
+    user = get_user(user_id) # 등록되지 않은 사용자를
 
     # Then
     assert user is None # 사용자가 존재하지 않음
