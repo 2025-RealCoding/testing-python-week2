@@ -73,7 +73,7 @@ def test_delete_registered_user(setup_user_db):
     user_info = get_user(user_id)
     assert user_info is None
 
-def test_get_deleted_user(setup_user_db):
+def test_get_notRegisterd_user(setup_user_db):
     # Given: 없는 사용자 ID
     user_id = "test"
 
